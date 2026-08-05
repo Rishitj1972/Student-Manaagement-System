@@ -26,4 +26,28 @@ public class StudentController {
         return studentService.addStudent(student);
     }
 
+    @GetMapping("/{id}")
+    public Student getStudentById(@PathVariable Long id) {
+        return studentService.getStudentById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
+        return studentService.updateStudent(id,student);
+    }
+
+    @DeleteMapping
+    public String deleteStudent(@PathVariable Long id) {
+        return studentService.deleteStudent(id);
+    }
+
+    @GetMapping("/exists/{id}")
+    public boolean exists(@PathVariable Long id) {
+        return studentService.studentExists(id);
+    }
+
+    @GetMapping("/count")
+    public long count() {
+        return studentService.countStudents();
+    }
 }
