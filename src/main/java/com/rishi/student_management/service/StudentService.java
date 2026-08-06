@@ -2,6 +2,7 @@ package com.rishi.student_management.service;
 
 import com.rishi.student_management.dto.StudentRequestDTO;
 import com.rishi.student_management.dto.StudentResponseDTO;
+import com.rishi.student_management.exception.StudentNotFoundException;
 import com.rishi.student_management.mapper.StudentMapper;
 import com.rishi.student_management.model.Student;
 import com.rishi.student_management.repository.StudentRepository;
@@ -36,7 +37,7 @@ public class StudentService {
 
     public StudentResponseDTO getStudentById(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("Student not found"));
+                new StudentNotFoundException("Student not found"));
 
         return StudentMapper.toResponse(student);
     }
@@ -44,7 +45,7 @@ public class StudentService {
     public StudentResponseDTO updateStudent(Long id, StudentRequestDTO dto) {
 
         Student student = studentRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("Student not found"));
+                new StudentNotFoundException("Student Not found"));
 
         student.setName(dto.getName());
         student.setDepartment(dto.getDepartment());
@@ -58,7 +59,7 @@ public class StudentService {
     public String deleteStudent(Long id) {
 
         studentRepository.findById(id).orElseThrow(() -> new
-                RuntimeException("Student not found"));
+                StudentNotFoundException("Student not found"));
 
         studentRepository.deleteById(id);
 
