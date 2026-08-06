@@ -1,5 +1,7 @@
 package com.rishi.student_management.controller;
 
+import com.rishi.student_management.dto.AuthResponseDTO;
+import com.rishi.student_management.dto.LoginRequestDTO;
 import com.rishi.student_management.dto.RegisterRequestDTO;
 import com.rishi.student_management.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +23,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequestDTO dto) {
         return ResponseEntity.ok(authService.register(dto));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO dto) {
+        return ResponseEntity.ok(authService.login(dto));
     }
 }

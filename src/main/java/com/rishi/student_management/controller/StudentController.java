@@ -2,7 +2,6 @@ package com.rishi.student_management.controller;
 
 import com.rishi.student_management.dto.StudentRequestDTO;
 import com.rishi.student_management.dto.StudentResponseDTO;
-import com.rishi.student_management.model.Student;
 import com.rishi.student_management.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
