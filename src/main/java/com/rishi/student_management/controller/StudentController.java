@@ -53,4 +53,19 @@ public class StudentController {
     public long count() {
         return studentService.countStudents();
     }
+
+    @GetMapping("/dept/{dept}")
+    public List<StudentResponseDTO> findStudentByDepartment(@PathVariable String department) {
+        return studentService.findByDepartment(department);
+    }
+
+    @GetMapping("/search")
+    public List<StudentResponseDTO> search(@RequestParam String name) {
+        return studentService.findByName(name);
+    }
+
+    @GetMapping("/sort")
+    public List<StudentResponseDTO> sortStudents() {
+        return studentService.getStudentBySortedAge();
+    }
 }

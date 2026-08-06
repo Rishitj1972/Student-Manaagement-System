@@ -6,6 +6,7 @@ import com.rishi.student_management.exception.StudentNotFoundException;
 import com.rishi.student_management.mapper.StudentMapper;
 import com.rishi.student_management.model.Student;
 import com.rishi.student_management.repository.StudentRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,4 +75,26 @@ public class StudentService {
         return studentRepository.count();
     }
 
+    public List<StudentResponseDTO> findByDepartment(String department) {
+
+        return studentRepository.findByDepartment(department)
+                .stream()
+                .map(StudentMapper::toResponse)
+                .toList();
+    }
+
+    public List<StudentResponseDTO> findByName(String name) {
+
+        return studentRepository.findByName(name).stream()
+                .map(StudentMapper::toResponse)
+                .toList();
+    }
+
+    public List<StudentResponseDTO> getStudentBySortedAge() {
+
+        return studentRepository.findAll(Sort.by("age"))
+                .stream()
+                .map(StudentMapper::toResponse)
+                .toList();
+    }
 }
