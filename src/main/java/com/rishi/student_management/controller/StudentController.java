@@ -1,5 +1,7 @@
 package com.rishi.student_management.controller;
 
+import com.rishi.student_management.dto.StudentRequestDTO;
+import com.rishi.student_management.dto.StudentResponseDTO;
 import com.rishi.student_management.model.Student;
 import com.rishi.student_management.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -17,22 +19,22 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAllStudents() {
+    public List<StudentResponseDTO> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+    public StudentResponseDTO addStudent(@RequestBody StudentRequestDTO dto) {
+        return studentService.addStudent(dto);
     }
 
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable Long id) {
+    public StudentResponseDTO getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public StudentResponseDTO updateStudent(@PathVariable Long id, @RequestBody StudentRequestDTO student) {
         return studentService.updateStudent(id,student);
     }
 

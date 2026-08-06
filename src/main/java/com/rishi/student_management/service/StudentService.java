@@ -1,5 +1,8 @@
 package com.rishi.student_management.service;
 
+import com.rishi.student_management.dto.StudentRequestDTO;
+import com.rishi.student_management.dto.StudentResponseDTO;
+import com.rishi.student_management.mapper.StudentMapper;
 import com.rishi.student_management.model.Student;
 import com.rishi.student_management.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -15,29 +18,41 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student addStudent(Student student) {
-        return studentRepository.save(student);
+    public StudentResponseDTO addStudent(StudentRequestDTO dto) {
+
+        Student student = StudentMapper.toEntity(dto);
+
+        Student savedStudent = studentRepository.save(student);
+
+        return StudentMapper.toResponse(savedStudent);
     }
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentResponseDTO> getAllStudents() {
+
+        return studentRepository.findAll().stream()
+                .map(StudentMapper::toResponse)
+                .toList();
     }
 
-    public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElseThrow(() ->
+    public StudentResponseDTO getStudentById(Long id) {
+        Student student = studentRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Student not found"));
+
+        return StudentMapper.toResponse(student);
     }
 
-    public Student updateStudent(Long id, Student updatedStudent) {
+    public StudentResponseDTO updateStudent(Long id, StudentRequestDTO dto) {
 
         Student student = studentRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Student not found"));
 
-        student.setName(updatedStudent.getName());
-        student.setDepartment(updatedStudent.getDepartment());
-        student.setAge(updatedStudent.getAge());
+        student.setName(dto.getName());
+        student.setDepartment(dto.getDepartment());
+        student.setAge(dto.getAge());
 
-        return studentRepository.save(student);
+        Student updatedStudent = studentRepository.save(student);
+
+        return StudentMapper.toResponse(updatedStudent);
     }
 
     public String deleteStudent(Long id) {
