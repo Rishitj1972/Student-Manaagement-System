@@ -4,6 +4,7 @@ import com.rishi.student_management.dto.StudentRequestDTO;
 import com.rishi.student_management.dto.StudentResponseDTO;
 import com.rishi.student_management.model.Student;
 import com.rishi.student_management.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,13 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<StudentResponseDTO> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @PostMapping
-    public StudentResponseDTO addStudent(@RequestBody StudentRequestDTO dto) {
+    @PostMapping("/add")
+    public StudentResponseDTO addStudent(@Valid @RequestBody StudentRequestDTO dto) {
         return studentService.addStudent(dto);
     }
 
@@ -33,12 +34,12 @@ public class StudentController {
         return studentService.getStudentById(id);
     }
 
-    @PutMapping("/{id}")
-    public StudentResponseDTO updateStudent(@PathVariable Long id, @RequestBody StudentRequestDTO student) {
+    @PutMapping("/update/{id}")
+    public StudentResponseDTO updateStudent(@Valid @PathVariable Long id, @RequestBody StudentRequestDTO student) {
         return studentService.updateStudent(id,student);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     public String deleteStudent(@PathVariable Long id) {
         return studentService.deleteStudent(id);
     }
